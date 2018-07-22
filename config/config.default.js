@@ -38,5 +38,10 @@ module.exports = appInfo => {
     agent: true,
   };
 
+  config.multipart={
+    fileExtensions: [ '.apk','.ipa'], // 增加对 .apk 扩展名的支持
+    fileSize: '80mb',
+  };
+
   return config;
 };

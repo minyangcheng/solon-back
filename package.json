@@ -6,7 +6,10 @@
   "dependencies": {
     "egg": "^2.2.1",
     "egg-mysql": "^3.0.0",
-    "egg-scripts": "^2.5.0"
+    "egg-scripts": "^2.5.0",
+    "egg-validate": "^1.0.0",
+    "isomorphic-apk-reader": "^1.2.0",
+    "stream-wormhole": "^1.0.4"
   },
   "devDependencies": {
     "autod": "^3.0.1",

@@ -9,7 +9,8 @@ module.exports = app => {
   router.post('/user/login', controller.user.login);
 
   router.post('/update/uploadApp', controller.update.uploadApp);
+  router.post('/update/applyVersion', controller.update.applyVersion);
   router.post('/update/getUpdateAppList', controller.update.getUpdateAppList);
-  router.post('/update/checkAppUpdate', controller.update.getUpdateAppList);
+  router.post('/update/checkAppUpdate', controller.update.checkAppUpdate);
 
 };
