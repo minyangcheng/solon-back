@@ -44,11 +44,60 @@ class UpdateService extends Service {
     }
     const result = await mysql.select('app_update', {
       where,
-      orders: [['modifyTime', 'desc'],['id','desc']],
-      limit: data.pageSize * 1,
+      orders: [['modifyTime', 'desc'], ['id', 'desc']],
+      limit: data.pageSize,
       offset: data.pageSize * data.currentPage,
     });
     return this.ctx.helper.restSucc({data: result, message: '获取更新app列表成功'});
+  }
+
+  async checkAppUpdate(data) {
+    const {mysql} = this.app;
+    const {helper} = this.ctx;
+    let result = await mysql.select('app_update', {
+      where: {appKey: data.appKey},
+    });
+    if (result.length > 0) {
+      result = result.filter(item => item.updateType != 0)
+        .sort((v1, v2) => this.compareVersion(v2.version, v1.version));
+      let maxResult = result[0];
+      if (this.compareVersion(maxResult.version, data.version) > 0) {
+        maxResult.id = undefined;
+        return helper.restSucc({
+          data: maxResult,
+          message: '获取版本信息成功'
+        });
+      } else {
+        return helper.restFail({message: '当前版本是最新的版本'});
+      }
+    } else {
+      return helper.restFail({message: '没有该应用版本的信息'});
+    }
+  }
+
+  compareVersion(v1, v2) {
+    v1 = v1.split('.')
+    v2 = v2.split('.')
+    var len = Math.max(v1.length, v2.length)
+
+    while (v1.length < len) {
+      v1.push('0')
+    }
+    while (v2.length < len) {
+      v2.push('0')
+    }
+
+    for (var i = 0; i < len; i++) {
+      var num1 = parseInt(v1[i])
+      var num2 = parseInt(v2[i])
+
+      if (num1 > num2) {
+        return 1
+      } else if (num1 < num2) {
+        return -1
+      }
+    }
+    return 0
   }
 
 }

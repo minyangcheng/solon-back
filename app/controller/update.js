@@ -56,6 +56,12 @@ class UpdateController extends Controller {
     const reqData = this.ctx.request.body;
     const helper = this.ctx.helper;
     try {
+      reqData.pageSize = Number(reqData.pageSize);
+      reqData.currentPage = Number(reqData.currentPage);
+      this.ctx.validate({
+        pageSize: {type: 'int'},
+        currentPage: {type: 'int'}
+      }, reqData);
       this.ctx.body = await this.service.update.getUpdateAppList(reqData);
     } catch (error) {
       this.logger.error(error);
@@ -64,7 +70,18 @@ class UpdateController extends Controller {
   }
 
   async checkAppUpdate() {
-    this.ctx.body = 'hi, egg';
+    let reqData = this.ctx.request.body;
+    let helper = this.ctx.helper;
+    try{
+      this.ctx.validate({
+        appKey: {type: 'string'},
+        version: {type: 'string'},
+      }, reqData);
+      this.ctx.body = await this.service.update.checkAppUpdate(reqData);
+    }catch (error){
+      this.logger.error(error);
+      this.ctx.body = helper.restFail({message:'checkAppUpdate请求出错'})
+    }
   }
 
   async parseAppFileInfo(filePath) {
@@ -100,6 +117,7 @@ class UpdateController extends Controller {
       });
     }));
   }
+
 }
 
 module.exports = UpdateController;

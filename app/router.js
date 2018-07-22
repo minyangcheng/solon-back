@@ -13,4 +13,8 @@ module.exports = app => {
   router.post('/update/getUpdateAppList', controller.update.getUpdateAppList);
   router.post('/update/checkAppUpdate', controller.update.checkAppUpdate);
 
+  router.post('/image/addImage', controller.image.addImage);
+  router.post('/image/deleteImage', controller.image.deleteImage);
+  router.post('/image/getImageList', controller.image.getImageList);
+
 };
