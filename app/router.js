@@ -7,6 +7,7 @@ module.exports = app => {
 
   router.post('/user/register', controller.user.register);
   router.post('/user/login', controller.user.login);
+  router.post('/user/getUserInfo', controller.user.getUserInfo);
 
   router.post('/update/uploadApp', controller.update.uploadApp);
   router.post('/update/applyVersion', controller.update.applyVersion);

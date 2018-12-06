@@ -61,7 +61,7 @@ insert into app_update(appKey,appType,updateType,packageUrl,version) values(
 '1.0.3'
 );
 
-delete from app_update where appKey = '';
+delete from app_update where appKey = 'com.cg.b';
 update app_update set version='2.0.1' where appKey='com.cg.b';
 select * from app_update;
 

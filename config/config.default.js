@@ -19,7 +19,12 @@ module.exports = appInfo => {
   config.security = {
     csrf: {
       enable: false,
-    },
+    }
+  };
+
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   };
 
   config.logger = {
@@ -38,8 +43,8 @@ module.exports = appInfo => {
     agent: true,
   };
 
-  config.multipart={
-    fileExtensions: [ '.apk','.ipa'], // 增加对 .apk 扩展名的支持
+  config.multipart = {
+    fileExtensions: ['.apk', '.ipa'], // 增加对 .apk 扩展名的支持
     fileSize: '80mb',
   };
 

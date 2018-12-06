@@ -50,6 +50,22 @@ class UserController extends Controller {
     }
   }
 
+  async getUserInfo() {
+    let userId = this.ctx.request.get('X-Token')
+    if (!userId) {
+      this.ctx.body = this.ctx.helper.restFail({message: 'userId不能为空'});
+      return;
+    }
+    try {
+      let result = await this.service.user.getUserInfo(userId);
+      result.avatar = 'http://127.0.0.1:7001/public/header.jpeg';
+      this.ctx.body = this.ctx.helper.restSucc({data: result});
+    } catch (error) {
+      this.logger.error(error);
+      this.ctx.body = this.ctx.helper.restFail({message: '获取用户信息失败'});
+    }
+  }
+
 }
 
 module.exports = UserController;

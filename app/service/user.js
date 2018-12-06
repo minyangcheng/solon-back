@@ -17,13 +17,23 @@ class UserService extends Service {
     }
   }
 
-  async login(userName, pwd){
+  async login(userName, pwd) {
     const mysql = this.app.mysql;
-    const user = await mysql.query('select * from user where userName=? and pwd=?', [userName,pwd]);
+    const user = await mysql.query('select * from user where userName=? and pwd=?', [userName, pwd]);
     if (user.length > 0) {
-      return this.ctx.helper.restSucc({data: user[0].id,message:'登录成功'});
+      return this.ctx.helper.restSucc({data: user[0], message: '登录成功'});
     } else {
       return this.ctx.helper.restFail({message: '用户名或密码错误'});
+    }
+  }
+
+  async getUserInfo(userId) {
+    const mysql = this.app.mysql;
+    const user = await mysql.query('select * from user where id=?', userId);
+    if (user.length > 0) {
+      return user[0];
+    } else {
+      return null;
     }
   }
 
